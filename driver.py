@@ -58,21 +58,23 @@ print("\n")
 print("Done, now a window of the Binance 1 BTC Buton game will opened and the further introductions will ne shown")
 time.sleep(1)
 driver.get(gameurl)
+time.sleep(3)
 print("\n")
 print("PLEASE USE THE OPENED WINDOW AND LOGIN TO YOUR BINANCE ACCOUNT")
 print("AFTER YOU LOGGED IN AND SAW THE GAME PAGE PLEASE PRESS ENTER TO START ")
 print("\n")
 ifready = (input("Type 'anything or simply press enter when you all set : ") == 'READY')
 
-
+time.sleep(1)
 start = time.perf_counter()
 
 
 def sendAlert(type, num):
     global chat_id
-    if type == "p": message = messageP
+    if type == "p": message = messageP + str(num)
     elif type == "a": message = messageA + str(num)
-    elif type == "e": message = messageE
+    elif type == "e": message = messageE + str(num)
+    elif type == "c": message = messageC + str(num)
 
     url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
     requests.get(url).json()
@@ -102,24 +104,32 @@ try:
             waitTime = 30
         elif secondsLeft < 4500:
             waitTime = 20
-            sendAlert(4500)
+            sendAlert("a", 4500)
         elif secondsLeft < 3000:
             waitTime = 5
-            sendAlert(3000)
+            sendAlert("a", 3000)
         elif secondsLeft < 5000:
             waitTime = 0
-            sendAlert(5000)
+            sendAlert("a", 5000)
 
         time.sleep(waitTime)
 
 
         now = time.perf_counter()
-        passed = start - now
-        start = now
+        passed = now-start
+
+        print(passed)
         if passed > 60:
             participant_element = driver.find_element(By.XPATH, '//*[@id="__APP"]/div/div[2]/div[5]/div[2]/div[2]')
             participant_text = participant_element.text
             newP = participant_text
+
+            start = now
+            sendAlert("p", participant_text)
+
+            lastP = int(lastP.replace(".", ""))       
+            newP = int(newP.replace(".", ""))
+            
             if lastP - newP < 5:
                 sendAlert("p", participant_text)
             lastP = newP

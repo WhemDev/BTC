@@ -29,15 +29,13 @@ class BinanceBot():
 
 
     def main(self):
-        clear = lambda: os.system('cls')
-        clear()
+        self.sendAlert("s", 0)
         print("Growth in the number of enrolled participant count is SLOWED; Please pay attention to take maual action.")
         print("To get Alerts and Notifications and Informations, please to following steps : \n1.   Open Telegram\n2.   Start a chat with our bot @binanceBtcButtonBot\n3.   Once you started a new chat, please copy your chat ID and paste it here")
         self.driver.get("https://www.binance.com/en/game/button/btc-2024?ref=BUTTONGAME") #Websiteyi aciyor
         WebDriverWait(self.driver,30).until(
             lambda driver : self.driver.execute_script("return document.readyState") == "complete" #sayfanin tamamen yuklenmesi js ile kontrol ediyor
         )
-        clear()
         print("PLEASE USE THE OPENED WINDOW AND LOGIN TO YOUR BINANCE ACCOUNT\nAFTER YOU LOGGED IN AND SAW THE GAME PAGE PLEASE PRESS ENTER TO START")
         ifready = (input("Simply press enter when you all set : ") == 'READY')
 
@@ -77,12 +75,13 @@ class BinanceBot():
 
 
                 now = time.perf_counter()
-                passed = start - now
-                
+                passed = now - start
+                print(passed)
                 if passed > 60:
                     participant_element = self.driver.find_element(By.XPATH, '//*[@id="__APP"]/div/div[2]/div[5]/div[2]/div[2]')
                     participant_text = participant_element.text
                     newP = participant_text
+                    self.sendAlert("p", participant_text)
                     if lastP - newP < 5:
                         self.sendAlert("p", participant_text)
                     lastP = newP
@@ -92,26 +91,26 @@ class BinanceBot():
             self.sendAlert("e", e)
 
     def sendAlert(self,type, num):
+        msg = "Connected to telegram"
         messageP = "Growth in the number of enrolled participant count is SLOWED; Please pay attention to take manual action."
         messageA = "TIMER ALERT\nThe counter has decreased significantly. Please check and prepare to take action.\nTIME LEFT: \n"
         messageE = "An Error occurred. Please take action."
         messageC = "AUTOMATICALLY CLICKED\nPLEASE TAKE IMMEDIATE ACTION"
         chat_id = None
         while not chat_id:
-            username = input("Please enter your Telegram username: ")
             
             response = requests.get(self.url2)
             data = response.json()
             
             for result in data["result"]:
-                if result["message"]["chat"].get("username") == username:
+                if result["message"]["chat"].get("username") == self.username:
                     chat_id = result["message"]["chat"]["id"]
                     break
 
             if chat_id:
-                print(f"Chat ID for username '{username}': {chat_id}")
+                print(f"Chat ID for username '{self.username}': {chat_id}")
             else:
-                print(f"User with username '{username}' not found.")
+                print(f"User with username '{self.username}' not found.")
                 print("Please try again. Make sure you have started a conversation with the bot using /start.")
                 time.sleep(1)
         message = "Ready"
@@ -121,6 +120,7 @@ class BinanceBot():
         elif type == "a": message = messageA + str(num)
         elif type == "e": message = messageE
         elif type == "c": message = messageC
+        elif type == "s": message = msg
         params = {
         "chat_id": chat_id,
         "text": message
