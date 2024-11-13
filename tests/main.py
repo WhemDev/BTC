@@ -4,7 +4,7 @@ import mss
 from datetime import datetime
 import os
 import time
-from config import * 
+from tests.config import * 
 
 # Şablon görüntüleri yükleme
 templates = {str(i): cv2.imread(f'templates/templates/{i}.png', 0) for i in range(10)}
