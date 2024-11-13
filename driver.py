@@ -8,10 +8,10 @@ driver = webdriver.Chrome()
 token = "7920129716:AAHzPB_qD_-TQJhAonzk_1pz7qtsLEvXE_4"
 url = f"https://api.telegram.org/bot{token}/getUpdates"
 
-messageP = "Growth in the number of enrolled participant count is SLOWED; Please pay attention to take maual action."
+messageP = "Growth in the number of enrolled participant count is SLOWED; Please pay attention to take manual action."
 messageA = "TIMER ALERT\nThe counter has decreased significantly. Please check and prepare to take action.\nTIME LEFT: \n"
-messageE = "An Error aquired. Please take action."
-messageC = "AUTOMATICALLY CLICKED\nPLEASE TEAKE IMMIDIATE ACTION"
+messageE = "An Error occurred. Please take action."
+messageC = "AUTOMATICALLY CLICKED\nPLEASE TAKE IMMEDIATE ACTION"
 
 url = "https://www.binance.com/en/game/button/btc-2024?ref=BUTTONGAME" 
 
@@ -21,7 +21,7 @@ print("Welcome to the Binance BTC Button Alerter Bot!")
 print("To get Alerts and Notifications and Informations, please to following steps : ")
 print("1.   Open Telegram")
 print("2.   Start a new chat with the official telegram bot creator @BotFather")
-print("3    Then use /newbot command to create a new bot. Then fallow the introductions.")
+print("3    Then use /newbot command to create a new bot. Then follow the introductions.")
 print("4.   Next the bot will send you a secret phase of your bot.")
 print("3.   Once you started a new chat, please copy your chat ID and paste it here.")
 chatID = input("Please enter your chat ID : ")
@@ -34,7 +34,7 @@ print("PLEASE USE THE OPENED WINDOW AND LOGIN TO YOUR BINANCE ACCOUNT")
 print("AFTER YOU LOGGED IN AND SAW THE GAME PAGE PLEASE PRESS ENTER TO START ")
 print("\n")
 ifready = (input("Type 'anything or simply press enter when you all set : ") == 'READY')
-print(ifready)
+
 
 start = time.perf_counter()
 
