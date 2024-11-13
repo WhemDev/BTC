@@ -1,12 +1,13 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+import requests
 
 driver = webdriver.Chrome()
 
 
 token = "7920129716:AAHzPB_qD_-TQJhAonzk_1pz7qtsLEvXE_4"
-url = f"https://api.telegram.org/bot{token}/getUpdates"
+url = f"https://api.telegram.org/bot{token}/sendMessage"
 
 messageP = "Growth in the number of enrolled participant count is SLOWED; Please pay attention to take manual action."
 messageA = "TIMER ALERT\nThe counter has decreased significantly. Please check and prepare to take action.\nTIME LEFT: \n"
@@ -48,6 +49,7 @@ def sendAlert(type, num):
     "chat_id": chatID,
     "text": message
 }
+    response = requests.get(url, params=params)
 
 
 
