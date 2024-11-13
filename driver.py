@@ -17,7 +17,7 @@ messageA = "TIMER ALERT\nThe counter has decreased significantly. Please check a
 messageE = "An Error occurred. Please take action."
 messageC = "AUTOMATICALLY CLICKED\nPLEASE TAKE IMMEDIATE ACTION"
 
-url = "https://www.binance.com/en/game/button/btc-2024?ref=BUTTONGAME" 
+gameurl = "https://www.binance.com/en/game/button/btc-2024?ref=BUTTONGAME" 
 
 time.sleep(2) 
 print("Binance BTC Button Detector")
@@ -27,7 +27,10 @@ print("1.   Open Telegram")
 print("2.   Start a new chat with the our telegram bot @binanceBtcButtonBot")
 print("3    Then use /start command to start a conversation. Then follow the introductions.")
 print("4.   Once you started a new chat, please enter YOUR telegram username. So our bot can send you private messages.")
+print("Once the process is completed, you will recieve a 'Ready' message from our bot.")
 
+print("\n")
+chat_id = None
 while not chat_id:
     username = input("Please enter your Telegram username: ")
     
@@ -46,10 +49,15 @@ while not chat_id:
         print("Please try again. Make sure you have started a conversation with the bot using /start.")
         time.sleep(1)
 
+message = "Ready"
+url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+requests.get(url).json()
+
+
 print("\n")
 print("Done, now a window of the Binance 1 BTC Buton game will opened and the further introductions will ne shown")
 time.sleep(1)
-driver.get(url)
+driver.get(gameurl)
 print("\n")
 print("PLEASE USE THE OPENED WINDOW AND LOGIN TO YOUR BINANCE ACCOUNT")
 print("AFTER YOU LOGGED IN AND SAW THE GAME PAGE PLEASE PRESS ENTER TO START ")
@@ -65,11 +73,9 @@ def sendAlert(type, num):
     if type == "p": message = messageP
     elif type == "a": message = messageA + str(num)
     elif type == "e": message = messageE
-    params = {
-    "chat_id": chat_id,
-    "text": message
-}
-    response = requests.get(url, params=params)
+
+    url = f"https://api.telegram.org/bot{token}/sendMessage?chat_id={chat_id}&text={message}"
+    requests.get(url).json()
 
 
 
