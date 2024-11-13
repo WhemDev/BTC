@@ -61,12 +61,12 @@ start = time.perf_counter()
 
 
 def sendAlert(type, num):
-    global chatID
+    global chat_id
     if type == "p": message = messageP
     elif type == "a": message = messageA + str(num)
     elif type == "e": message = messageE
     params = {
-    "chat_id": chatID,
+    "chat_id": chat_id,
     "text": message
 }
     response = requests.get(url, params=params)
