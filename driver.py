@@ -9,6 +9,8 @@ driver = webdriver.Chrome()
 token = "7920129716:AAHzPB_qD_-TQJhAonzk_1pz7qtsLEvXE_4"
 url = f"https://api.telegram.org/bot{token}/sendMessage"
 
+https://api.telegram.org/bot7920129716:AAHzPB_qD_-TQJhAonzk_1pz7qtsLEvXE_4/getUpdates
+
 messageP = "Growth in the number of enrolled participant count is SLOWED; Please pay attention to take manual action."
 messageA = "TIMER ALERT\nThe counter has decreased significantly. Please check and prepare to take action.\nTIME LEFT: \n"
 messageE = "An Error occurred. Please take action."
@@ -89,7 +91,7 @@ try:
 
         now = time.perf_counter()
         passed = start - now
-        
+        start = now
         if passed > 60:
             participant_element = driver.find_element(By.XPATH, '//*[@id="__APP"]/div/div[2]/div[5]/div[2]/div[2]')
             participant_text = participant_element.text
